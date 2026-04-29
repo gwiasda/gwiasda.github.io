@@ -55,7 +55,6 @@
         /* Day header row */
         .day-row {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
             text-align: center;
             border-bottom: 1px solid #ddd;
             padding: 8px 0;
@@ -69,18 +68,28 @@
         /* Weather icon row */
         .icon-row {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
             text-align: center;
             padding: 8px 0;
             border-bottom: 1px solid #eee;
         }
-        .weather-icon { font-size: 2.2rem; line-height: 1; }
+        .weather-icon {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .weather-icon svg {
+            width: 44px;
+            height: 44px;
+        }
+        .weather-icon .fallback {
+            font-size: 1.3rem;
+            color: #888;
+        }
 
         /* Precipitation probability bars */
         .precip-section { padding: 4px 0 8px; }
         .precip-header {
             display: grid;
-            grid-template-columns: 30px repeat(6, 1fr);
             text-align: center;
             font-size: 0.7rem;
             color: #888;
@@ -105,7 +114,6 @@
         }
         .precip-chart-area {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
             position: relative;
         }
         .day-bars {
@@ -135,7 +143,6 @@
         /* Precipitation amount row */
         .amount-row {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
             text-align: center;
             padding: 6px 0;
             border-bottom: 1px solid #ddd;
@@ -146,7 +153,6 @@
         /* Sunshine row */
         .sunshine-row {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
             text-align: center;
             padding: 6px 0;
             border-bottom: 1px solid #ddd;
@@ -157,7 +163,6 @@
         /* Temperature row */
         .temp-row {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
             text-align: center;
             padding: 10px 0;
             gap: 6px;
@@ -180,34 +185,9 @@
         .temp-max { background: #e74c3c; color: white; }
         .temp-min { background: #3498db; color: white; }
 
-        /* Frost row */
-        .frost-row {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            text-align: center;
-            padding: 8px 0;
-            border-bottom: 1px solid #ddd;
-        }
-        .frost-cell {
-            display: flex;
-            justify-content: center;
-            gap: 2px;
-        }
-        .frost-block {
-            width: 14px;
-            height: 14px;
-            border-radius: 2px;
-        }
-        .frost-none { background: #27ae60; }
-        .frost-light { background: #f39c12; }
-        .frost-moderate { background: #e67e22; }
-        .frost-severe { background: #2980b9; }
-        .frost-extreme { background: #1a5276; }
-
         /* Snow row */
         .snow-row {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
             text-align: center;
             padding: 6px 0;
             border-bottom: 1px solid #ddd;
@@ -215,15 +195,30 @@
             color: #7f8c8d;
         }
 
-        /* Wind row */
-        .wind-row {
-            display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            text-align: center;
-            padding: 6px 0;
+        /* Föhn chart */
+        .foehn-wrap {
+            padding: 6px 0 4px;
             border-bottom: 1px solid #ddd;
+        }
+        .foehn-wrap svg {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .foehn-legend {
+            font-size: 0.7rem;
+            color: #666;
+            padding: 2px 6px 8px;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid #ddd;
+        }
+        .foehn-status {
             font-size: 0.8rem;
-            color: #555;
+            color: #888;
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
         }
 
         /* Footer */
@@ -255,6 +250,55 @@
             max-width: 220px;
         }
         .header select option { color: #333; background: #fff; }
+
+        /* Mobile (< 600px) */
+        @media (max-width: 600px) {
+            .header { padding: 10px 12px; gap: 8px; }
+            .header h1 { font-size: 0.95rem; }
+            .header select {
+                font-size: 0.8rem;
+                padding: 4px 6px;
+                max-width: 50%;
+            }
+            .sub-header { padding: 8px 12px; }
+            .sub-header .date { font-size: 0.75rem; }
+
+            .forecast { padding: 0 4px; }
+            .section-title { font-size: 0.8rem; padding: 10px 4px 4px; }
+            .day-label { font-size: 0.8rem; }
+
+            .day-row { padding: 6px 0; }
+            .icon-row { padding: 4px 0; }
+            .weather-icon svg { width: 30px; height: 30px; }
+
+            .precip-header { font-size: 0.55rem; }
+            .precip-wrapper { grid-template-columns: 22px 1fr; }
+            .precip-y-axis, .day-bars { height: 60px; }
+            .precip-y-label { font-size: 0.6rem; }
+            .day-bars { padding: 0 1px; gap: 1px; }
+            .bar { max-width: 4px; }
+
+            .amount-row, .sunshine-row, .snow-row {
+                font-size: 0.7rem;
+                padding: 5px 0;
+            }
+            .temp-row { padding: 6px 0; gap: 2px; }
+            .temp-val {
+                padding: 2px 4px;
+                font-size: 0.75rem;
+                min-width: 28px;
+                border-radius: 3px;
+            }
+
+            .foehn-legend {
+                font-size: 0.6rem;
+                padding: 2px 4px 6px;
+            }
+
+            .footer-info { padding: 10px 12px; }
+            .footer-info .timestamp { font-size: 0.75rem; }
+            .footer-info a { font-size: 0.75rem; }
+        }
     </style>
 </head>
 <body>
@@ -267,15 +311,33 @@
     </div>
 
     <script>
-    var SKY = {
-        A: '\u2600\uFE0F', B: '\uD83C\uDF24\uFE0F', C: '\u26C5',
-        D: '\uD83C\uDF25\uFE0F', E: '\u2601\uFE0F', F: '\uD83C\uDF26\uFE0F',
-        L: '\uD83C\uDF27\uFE0F', N: '\uD83C\uDF28\uFE0F', Q: '\uD83C\uDF27\uFE0F',
-        S: '\u2744\uFE0F'
-    };
-
-    var BASE_URL = 'https://static-wetter.provinz.bz.it/forecast-data/website/municipalities/';
+    var STATIC_BASE = 'https://static-wetter.provinz.bz.it/';
+    var BASE_URL = STATIC_BASE + 'forecast-data/website/municipalities/';
+    var SKY_URL = STATIC_BASE + 'forecast-data/website/static-data/sky_conditions.json';
+    var PRESSURE_URL = STATIC_BASE + 'web-data/charts/pressure/pressure-diff.json';
     var DEFAULT_ID = '4cb2b5c5-c708-4882-97be-08f9cde44d75';
+
+    var SKY_ICONS = {};
+    var PRESSURE_DATA = null;
+
+    var skyPromise = fetch(SKY_URL)
+        .then(function(r) { return r.json(); })
+        .then(function(arr) {
+            arr.forEach(function(item) {
+                SKY_ICONS[String(item.id || '').toLowerCase()] = item.svg_day || '';
+            });
+        })
+        .catch(function() {});
+
+    var pressurePromise = fetch(PRESSURE_URL + '?cb=' + Date.now())
+        .then(function(r) { return r.json(); })
+        .then(function(d) {
+            var loc = (d.locations || [])[0];
+            if (loc && loc['pressure-diff'] && Array.isArray(loc['pressure-diff'].data)) {
+                PRESSURE_DATA = loc['pressure-diff'].data;
+            }
+        })
+        .catch(function() {});
 
     var MUNICIPALITIES = [
         {id:'96dd7235-4bed-45fe-8e09-7efa1b35e053',n:'Abtei'},
@@ -322,17 +384,17 @@
         {id:'e4377eba-f3c3-4643-8067-ff8bc69c6613',n:'Latsch'},
         {id:'30f4a48a-76fe-48ce-baf4-871a0e81e2b1',n:'Laurein'},
         {id:'20aa991d-9441-40e5-b061-21e2b7b9d65b',n:'Leifers'},
-        {id:'2ebb7308-a565-40c8-b97d-cc11707423e1',n:'L\u00FCsen'},
+        {id:'2ebb7308-a565-40c8-b97d-cc11707423e1',n:'Lüsen'},
         {id:'ed8a0e95-20b2-48b7-b9fb-861e052695bb',n:'Mals'},
         {id:'91aa1902-01e6-4d9e-be20-8e98d2027b72',n:'Margreid a.d. Weinstr.'},
         {id:'f1f2f857-9156-4f23-b510-5de1df6decc3',n:'Marling'},
         {id:'7b0d2cca-ee3b-4447-9cd7-2e57c9299e3d',n:'Martell'},
         {id:'4e3546c8-e52a-4eb8-9cf7-64baf80188b9',n:'Meran'},
-        {id:'58e0f9b8-aebf-4b14-995b-69bca67f48d6',n:'M\u00F6lten'},
+        {id:'58e0f9b8-aebf-4b14-995b-69bca67f48d6',n:'Mölten'},
         {id:'2606c996-3cc2-4072-80da-f77dd39a37a6',n:'Montan an der Weinstr.'},
         {id:'b203d09a-4f45-4d56-b501-875b561e1db1',n:'Moos in Passeier'},
-        {id:'7389d887-5d18-4167-8019-35440bef9326',n:'M\u00FChlbach'},
-        {id:'1278f81e-f5bf-45d2-981d-dfea1e4cb2d4',n:'M\u00FChlwald'},
+        {id:'7389d887-5d18-4167-8019-35440bef9326',n:'Mühlbach'},
+        {id:'1278f81e-f5bf-45d2-981d-dfea1e4cb2d4',n:'Mühlwald'},
         {id:'fbf2b1a6-e8b0-452b-be2b-8c0412543769',n:'Nals'},
         {id:'0b295cc3-0cc6-4c43-89a4-85b9978d81b3',n:'Naturns'},
         {id:'cbe05ba9-ed29-4217-bcaf-8bc7ae74010b',n:'Natz-Schabs'},
@@ -367,11 +429,11 @@
         {id:'e5a500d5-eae9-4beb-b117-92d7caaa48a7',n:'St.Leonhard in Pass.'},
         {id:'47b0aeec-190e-48e6-84be-827320d738d5',n:'St.Lorenzen'},
         {id:'44dd7273-7a0c-4b0d-97b8-77573277fdb6',n:'St.Pankraz'},
-        {id:'2b9bfa78-cc09-4885-9868-4f8aee21ffb4',n:'St.Christina in Gr\u00F6den'},
+        {id:'2b9bfa78-cc09-4885-9868-4f8aee21ffb4',n:'St.Christina in Gröden'},
         {id:'34645717-a06c-4445-b484-2caa302af50f',n:'St.Ulrich'},
         {id:'4cb2b5c5-c708-4882-97be-08f9cde44d75',n:'Sterzing'},
         {id:'f9930a2b-00b6-4799-8364-4df98d104bc5',n:'Stilfs'},
-        {id:'647a082c-d45a-4abc-8f67-4e4b1d1ff36d',n:'Taufers im M\u00FCnstertal'},
+        {id:'647a082c-d45a-4abc-8f67-4e4b1d1ff36d',n:'Taufers im Münstertal'},
         {id:'0fa0d40a-dd6e-44b7-babc-fbf71db35368',n:'Terlan'},
         {id:'6640a6b1-29fb-4a2b-8478-3b9520c7efe6',n:'Terenten'},
         {id:'318d2727-fbe7-427a-9b1c-e8c274368e12',n:'Tiers'},
@@ -383,17 +445,20 @@
         {id:'91f66752-868f-47e2-b688-2b73dfb8f062',n:'U.L.Frau i.W.-St.Felix'},
         {id:'3fddbe89-9c91-4bed-ad32-47c0d935dd93',n:'Ulten'},
         {id:'d3687023-8552-4acc-a7d3-ea8bd3ebc25d',n:'Vahrn'},
-        {id:'844ca7bf-08a5-4bac-a8f6-6763192c3249',n:'Villn\u00F6ss'},
+        {id:'844ca7bf-08a5-4bac-a8f6-6763192c3249',n:'Villnöss'},
         {id:'bffb5053-bd53-48b2-84b5-82d8df62e1de',n:'Villanders'},
         {id:'827f8691-7127-40d6-990b-94fb2045ad59',n:'Vintl'},
-        {id:'bc3a85f9-a177-4477-8122-38e2f5f97069',n:'V\u00F6ls am Schlern'},
-        {id:'f058f12f-57e1-455f-907a-085372454a9e',n:'V\u00F6ran'},
+        {id:'bc3a85f9-a177-4477-8122-38e2f5f97069',n:'Völs am Schlern'},
+        {id:'f058f12f-57e1-455f-907a-085372454a9e',n:'Vöran'},
         {id:'a0eb5790-258f-4247-989a-cee5c2e366b9',n:'Waidbruck'},
         {id:'e01cb13a-8a51-4a70-9b92-81dc10d328ed',n:'Welsberg-Taisten'},
         {id:'febe0cf3-9e9c-493a-8533-f75297aee9a8',n:'Welschnofen'},
         {id:'29b112ee-4ea5-4416-9436-586f9a4cca00',n:'Wengen'},
-        {id:'64433a19-0b28-4277-bfae-eaacf64b9031',n:'Wolkenstein in Gr\u00F6den'}
+        {id:'64433a19-0b28-4277-bfae-eaacf64b9031',n:'Wolkenstein in Gröden'}
     ];
+
+    var SVG_NS = 'http://www.w3.org/2000/svg';
+    var SVG_PARSER = new DOMParser();
 
     function el(tag, cls) {
         var e = document.createElement(tag);
@@ -407,15 +472,38 @@
         return e;
     }
 
+    function svgEl(tag, attrs) {
+        var e = document.createElementNS(SVG_NS, tag);
+        if (attrs) {
+            for (var k in attrs) e.setAttribute(k, attrs[k]);
+        }
+        return e;
+    }
+
+    function setCols(node, n) {
+        node.style.gridTemplateColumns = 'repeat(' + n + ', 1fr)';
+    }
+
+    // Parse SVG markup from the official sky_conditions.json into a real SVG node
+    // (avoids innerHTML; only the <svg> root + descendants are imported).
+    function parseSvg(markup) {
+        if (!markup) return null;
+        var doc = SVG_PARSER.parseFromString(markup, 'image/svg+xml');
+        var root = doc.documentElement;
+        if (!root || root.nodeName.toLowerCase() !== 'svg') return null;
+        return document.importNode(root, true);
+    }
+
     function parseData(raw) {
         var startDate = new Date(raw.start);
         var daily = raw['1440'];
         var hourly = raw['180'];
 
         var dayKeys = Object.keys(daily).sort(function(a, b) { return Number(a) - Number(b); });
-        var days = dayKeys.map(function(key, i) {
+        var allDays = dayKeys.map(function(key, i) {
             var d = daily[key];
             var date = new Date(startDate);
+            date.setHours(0, 0, 0, 0);
             date.setDate(date.getDate() + i);
             return {
                 date: date,
@@ -425,49 +513,274 @@
                 tempMax: d.temperature_maximum,
                 rainfall: d.rain_fall,
                 freshSnow: d.fresh_snow,
-                windGust: d.wind_gust,
-                windSpeed: d.wind_speed,
                 snowLevel: d.snow_level,
-                freezingLevel: d.freezing_level,
                 rainProb: d.rain_probability,
                 sunshine: d.sunshine_duration,
                 sky: d.sky_condition
             };
         });
 
-        // Group 3h data by day (8 slots per day)
         var hourKeys = Object.keys(hourly).sort(function(a, b) { return Number(a) - Number(b); });
-        var hoursByDay = [];
-        for (var di = 0; di < days.length; di++) {
-            hoursByDay.push([]);
-        }
+        var hoursByAll = [];
+        for (var di = 0; di < allDays.length; di++) hoursByAll.push([]);
         hourKeys.forEach(function(key, i) {
             var dayIdx = Math.floor(i / 8);
-            if (dayIdx < days.length) {
-                hoursByDay[dayIdx].push(hourly[key]);
-            }
+            if (dayIdx < allDays.length) hoursByAll[dayIdx].push(hourly[key]);
         });
+
+        // Skip past days so the first column is always today (or later).
+        var today = new Date();
+        today.setHours(0, 0, 0, 0);
+        var skip = 0;
+        while (skip < allDays.length && allDays[skip].date.getTime() < today.getTime()) skip++;
+        var days = allDays.slice(skip);
+        var hoursByDay = hoursByAll.slice(skip);
 
         return { days: days, hoursByDay: hoursByDay, startDate: startDate };
     }
 
-    function getFrostLevel(tempMin) {
-        if (tempMin >= 3) return 'frost-none';
-        if (tempMin >= 0) return 'frost-light';
-        if (tempMin >= -3) return 'frost-moderate';
-        if (tempMin >= -7) return 'frost-severe';
-        return 'frost-extreme';
+    function appendIcon(parent, sky) {
+        var box = el('div', 'weather-icon');
+        var svgNode = parseSvg(SKY_ICONS[String(sky || '').toLowerCase()]);
+        if (svgNode) {
+            box.appendChild(svgNode);
+        } else {
+            var fb = el('span', 'fallback');
+            fb.textContent = '–';
+            box.appendChild(fb);
+        }
+        parent.appendChild(box);
+        return box;
+    }
+
+    function renderFoehn(parent, days) {
+        parent.appendChild(txt('div', 'section-title', 'Föhndiagramm: Luftdruckdifferenz Bozen – Innsbruck (hPa)'));
+
+        if (!PRESSURE_DATA || !days.length) {
+            parent.appendChild(txt('div', 'foehn-status', 'Föhndaten nicht verfügbar'));
+            return;
+        }
+
+        var dayStart = new Date(days[0].date).getTime();
+        var dayEnd = new Date(days[days.length - 1].date);
+        dayEnd.setDate(dayEnd.getDate() + 1);
+        var dayEndMs = dayEnd.getTime();
+
+        var pts = PRESSURE_DATA
+            .map(function(p) { return { t: new Date(p.date).getTime(), v: Number(p.value) }; })
+            .filter(function(p) { return p.t >= dayStart && p.t <= dayEndMs && !isNaN(p.v); });
+
+        if (pts.length < 2) {
+            parent.appendChild(txt('div', 'foehn-status', 'Föhndaten nicht verfügbar'));
+            return;
+        }
+
+        var W = 600, H = 160;
+        var mxL = 24, mxR = 14, mtop = 8, mbot = 22;
+        var plotW = W - mxL - mxR;
+        var plotH = H - mtop - mbot;
+
+        var maxV = pts.reduce(function(a, p) { return Math.max(a, p.v); }, 0);
+        var minV = pts.reduce(function(a, p) { return Math.min(a, p.v); }, 0);
+        var bound = Math.max(6, Math.ceil(Math.max(Math.abs(minV), Math.abs(maxV))));
+        var yMin = -bound, yMax = bound;
+
+        var spanT = dayEndMs - dayStart || 1;
+        function xT(t) { return mxL + ((t - dayStart) / spanT) * plotW; }
+        function yV(v) { return mtop + (1 - (v - yMin) / (yMax - yMin)) * plotH; }
+
+        var wrap = el('div', 'foehn-wrap');
+        var svg = svgEl('svg', {
+            viewBox: '0 0 ' + W + ' ' + H,
+            preserveAspectRatio: 'none',
+            width: '100%',
+            height: H + 'px'
+        });
+
+        var zeroY = yV(0);
+        var plotLeft = mxL;
+        var plotRight = W - mxR;
+        var plotTop = mtop;
+        var plotBot = H - mbot;
+
+        // Background bands: red above zero (Südföhn), blue below zero (Nordföhn)
+        if (zeroY > plotTop) {
+            svg.appendChild(svgEl('rect', {
+                x: plotLeft, y: plotTop,
+                width: plotW, height: zeroY - plotTop,
+                fill: '#e74c3c',
+                'fill-opacity': 0.06
+            }));
+        }
+        if (plotBot > zeroY) {
+            svg.appendChild(svgEl('rect', {
+                x: plotLeft, y: zeroY,
+                width: plotW, height: plotBot - zeroY,
+                fill: '#2980b9',
+                'fill-opacity': 0.06
+            }));
+        }
+
+        // Y grid + labels
+        for (var v = yMin; v <= yMax; v++) {
+            var isZero = v === 0;
+            var line = svgEl('line', {
+                x1: plotLeft, x2: plotRight,
+                y1: yV(v), y2: yV(v),
+                stroke: isZero ? '#1a5276' : '#eee',
+                'stroke-width': isZero ? 1 : 0.5
+            });
+            if (!isZero) line.setAttribute('stroke-dasharray', '2,2');
+            svg.appendChild(line);
+
+            var lbl = svgEl('text', {
+                x: plotLeft - 4, y: yV(v) + 3,
+                'text-anchor': 'end',
+                'font-size': 8,
+                fill: '#888'
+            });
+            lbl.textContent = (v > 0 ? '+' : '') + v;
+            svg.appendChild(lbl);
+        }
+
+        // Nordföhn zone: highlight band between -3 and -6 hPa
+        var nfTop = Math.max(-3, yMin);
+        var nfBot = Math.max(-6, yMin);
+        if (nfTop > nfBot) {
+            svg.appendChild(svgEl('rect', {
+                x: plotLeft, y: yV(nfTop),
+                width: plotW, height: yV(nfBot) - yV(nfTop),
+                fill: '#1a5276',
+                'fill-opacity': 0.12
+            }));
+            [nfTop, nfBot].forEach(function(v) {
+                svg.appendChild(svgEl('line', {
+                    x1: plotLeft, x2: plotRight,
+                    y1: yV(v), y2: yV(v),
+                    stroke: '#1a5276',
+                    'stroke-width': 0.7,
+                    'stroke-dasharray': '4,3',
+                    opacity: 0.7
+                }));
+            });
+            var nfLabel = svgEl('text', {
+                x: plotLeft + 6,
+                y: (yV(nfTop) + yV(nfBot)) / 2 + 3,
+                'text-anchor': 'start',
+                'font-size': 9,
+                'font-weight': 700,
+                fill: '#1a5276',
+                opacity: 0.85
+            });
+            nfLabel.textContent = 'Nordföhn';
+            svg.appendChild(nfLabel);
+        }
+
+        // Day separators + labels
+        days.forEach(function(d, i) {
+            var ds = new Date(d.date).getTime();
+            if (i > 0) {
+                svg.appendChild(svgEl('line', {
+                    x1: xT(ds), x2: xT(ds),
+                    y1: plotTop, y2: plotBot,
+                    stroke: '#ccc',
+                    'stroke-width': 0.5
+                }));
+            }
+            var dCenter = ds + 12 * 3600 * 1000;
+            if (dCenter >= dayStart && dCenter <= dayEndMs) {
+                var dl = svgEl('text', {
+                    x: xT(dCenter), y: H - 6,
+                    'text-anchor': 'middle',
+                    'font-size': 9,
+                    fill: '#1a5276',
+                    'font-weight': 700
+                });
+                dl.textContent = d.dayName;
+                svg.appendChild(dl);
+            }
+        });
+
+        // Split area fill: red above zero (Südföhn), blue below zero (Nordföhn)
+        // Same closed area path is rendered twice with two opposing clip rects.
+        var clipUid = 'foehn-' + Math.random().toString(36).slice(2, 8);
+        var defs = svgEl('defs');
+
+        var clipPos = svgEl('clipPath', { id: clipUid + '-pos' });
+        clipPos.appendChild(svgEl('rect', {
+            x: 0, y: plotTop,
+            width: W, height: Math.max(0, zeroY - plotTop)
+        }));
+        defs.appendChild(clipPos);
+
+        var clipNeg = svgEl('clipPath', { id: clipUid + '-neg' });
+        clipNeg.appendChild(svgEl('rect', {
+            x: 0, y: zeroY,
+            width: W, height: Math.max(0, plotBot - zeroY)
+        }));
+        defs.appendChild(clipNeg);
+        svg.appendChild(defs);
+
+        var areaD = 'M' + xT(pts[0].t).toFixed(1) + ',' + zeroY.toFixed(1);
+        pts.forEach(function(p) {
+            areaD += ' L' + xT(p.t).toFixed(1) + ',' + yV(p.v).toFixed(1);
+        });
+        areaD += ' L' + xT(pts[pts.length - 1].t).toFixed(1) + ',' + zeroY.toFixed(1) + ' Z';
+
+        svg.appendChild(svgEl('path', {
+            d: areaD,
+            fill: '#e74c3c',
+            'fill-opacity': 0.35,
+            'clip-path': 'url(#' + clipUid + '-pos)'
+        }));
+        svg.appendChild(svgEl('path', {
+            d: areaD,
+            fill: '#2980b9',
+            'fill-opacity': 0.35,
+            'clip-path': 'url(#' + clipUid + '-neg)'
+        }));
+
+        // Curve on top
+        var pathD = '';
+        pts.forEach(function(p, i) {
+            pathD += (i === 0 ? 'M' : 'L') + xT(p.t).toFixed(1) + ',' + yV(p.v).toFixed(1) + ' ';
+        });
+        svg.appendChild(svgEl('path', {
+            d: pathD,
+            fill: 'none',
+            stroke: '#1a5276',
+            'stroke-width': 1.5
+        }));
+
+        wrap.appendChild(svg);
+        parent.appendChild(wrap);
+
+        var legend = el('div', 'foehn-legend');
+        var negSpan = txt('span', '', '');
+        var negSwatch = el('span');
+        negSwatch.style.cssText = 'display:inline-block;width:10px;height:10px;background:#1a5276;opacity:0.4;margin-right:4px;vertical-align:middle;';
+        negSpan.appendChild(negSwatch);
+        negSpan.appendChild(document.createTextNode('Nordföhn-Zone (−3 bis −6 hPa)'));
+        legend.appendChild(negSpan);
+        parent.appendChild(legend);
     }
 
     function render(raw) {
         var data = parseData(raw);
         var days = data.days;
         var hoursByDay = data.hoursByDay;
+        var nDays = days.length;
 
         var content = document.getElementById('content');
         content.textContent = '';
 
-        // Sub-header
+        if (!nDays) {
+            var warn = el('div', 'loading');
+            warn.textContent = 'Keine aktuellen Vorhersagedaten verfügbar.';
+            content.appendChild(warn);
+            return;
+        }
+
         var sub = el('div', 'sub-header');
         sub.appendChild(txt('div', 'date',
             'Vorhersage vom ' + days[0].date.toLocaleDateString('de-AT', {
@@ -480,6 +793,7 @@
 
         // Day header row
         var dayRow = el('div', 'day-row');
+        setCols(dayRow, nDays);
         days.forEach(function(d) {
             var label = el('div', 'day-label');
             label.textContent = d.dayName;
@@ -489,19 +803,16 @@
 
         // Weather icons
         var iconRow = el('div', 'icon-row');
-        days.forEach(function(d) {
-            var ic = el('div', 'weather-icon');
-            ic.textContent = SKY[d.sky] || '?';
-            iconRow.appendChild(ic);
-        });
+        setCols(iconRow, nDays);
+        days.forEach(function(d) { appendIcon(iconRow, d.sky); });
         forecast.appendChild(iconRow);
 
         // -- Niederschlagswahrscheinlichkeit --
         forecast.appendChild(txt('div', 'section-title', 'Niederschlagswahrscheinlichkeit'));
 
-        // Sub-day time labels (with empty first cell for y-axis column)
         var timeHeader = el('div', 'precip-header');
-        timeHeader.appendChild(el('div')); // empty spacer for y-axis
+        timeHeader.style.gridTemplateColumns = '30px repeat(' + nDays + ', 1fr)';
+        timeHeader.appendChild(el('div'));
         days.forEach(function() {
             var cell = el('div');
             cell.textContent = '6  12 18h';
@@ -509,10 +820,8 @@
         });
         forecast.appendChild(timeHeader);
 
-        // Wrapper: y-axis + chart area
         var precipWrapper = el('div', 'precip-wrapper');
 
-        // Y-axis with 90%, 60%, 30% labels
         var yAxis = el('div', 'precip-y-axis');
         [90, 60, 30].forEach(function(pct) {
             var label = el('span', 'precip-y-label');
@@ -527,10 +836,8 @@
         yAxis.appendChild(pctLabel);
         precipWrapper.appendChild(yAxis);
 
-        // Bar chart area with grid lines
         var chartArea = el('div', 'precip-chart-area');
-
-        // Grid lines at 30%, 60%, 90%
+        setCols(chartArea, nDays);
         [90, 60, 30].forEach(function(pct) {
             var line = el('div', 'precip-grid-line');
             line.style.top = ((100 - pct) / 100 * 80) + 'px';
@@ -542,9 +849,10 @@
             var slots = hoursByDay[di] || [];
             slots.forEach(function(slot) {
                 var bar = el('div', 'bar');
-                var h = Math.max(1, (slot.rain_probability / 100) * 78);
+                var prob = Number(slot.rain_probability) || 0;
+                var h = Math.max(1, (prob / 100) * 78);
                 bar.style.height = h + 'px';
-                var alpha = 0.3 + (slot.rain_probability / 100) * 0.7;
+                var alpha = 0.3 + (prob / 100) * 0.7;
                 bar.style.background = 'rgba(41,128,185,' + alpha + ')';
                 dayBars.appendChild(bar);
             });
@@ -556,6 +864,7 @@
         // -- Niederschlagsmenge --
         forecast.appendChild(txt('div', 'section-title', 'Niederschlagsmenge'));
         var amountRow = el('div', 'amount-row');
+        setCols(amountRow, nDays);
         days.forEach(function(d) {
             var cell = el('div');
             if (d.rainfall === 0) {
@@ -577,65 +886,41 @@
         });
         forecast.appendChild(amountRow);
 
-        // -- Sonnenscheindauer --
-        forecast.appendChild(txt('div', 'section-title', 'Sonnenscheindauer'));
+        // -- Sonnenstunden --
+        forecast.appendChild(txt('div', 'section-title', 'Sonnenstunden'));
         var sunRow = el('div', 'sunshine-row');
+        setCols(sunRow, nDays);
         days.forEach(function(d) {
             var cell = el('div');
-            cell.textContent = d.sunshine.toFixed(1) + ' h';
+            var hrs = Number(d.sunshine);
+            cell.textContent = (isNaN(hrs) ? '–' : hrs.toFixed(1) + ' h');
             sunRow.appendChild(cell);
         });
         forecast.appendChild(sunRow);
 
-        // -- Temperaturen --
+        // -- Temperaturen Min/Max --
         forecast.appendChild(txt('div', 'section-title', 'Temperaturen: Min/Max'));
         var tempRow = el('div', 'temp-row');
+        setCols(tempRow, nDays);
         days.forEach(function(d) {
             var box = el('div', 'temp-box');
-
             var maxVal = el('span', 'temp-val temp-max');
-            maxVal.textContent = d.tempMax + '\u00B0';
+            maxVal.textContent = d.tempMax + '°';
             box.appendChild(maxVal);
-
             var minVal = el('span', 'temp-val temp-min');
-            minVal.textContent = d.tempMin + '\u00B0';
+            minVal.textContent = d.tempMin + '°';
             box.appendChild(minVal);
-
             tempRow.appendChild(box);
         });
         forecast.appendChild(tempRow);
 
-        // -- Frostgefahr --
-        forecast.appendChild(txt('div', 'section-title', 'Frostgefahr in den Tallagen'));
-        var frostRow = el('div', 'frost-row');
-        days.forEach(function(d) {
-            var cell = el('div', 'frost-cell');
-            // Show 4 blocks representing night/morning/afternoon/evening frost risk
-            var slots = hoursByDay[days.indexOf(d)] || [];
-            // Split into 4 periods of ~6h each
-            var periods = [
-                slots.slice(0, 2),   // 00-06
-                slots.slice(2, 4),   // 06-12
-                slots.slice(4, 6),   // 12-18
-                slots.slice(6, 8)    // 18-24
-            ];
-            periods.forEach(function(pSlots) {
-                var block = el('div', 'frost-block');
-                if (pSlots.length > 0) {
-                    var minT = Math.min.apply(null, pSlots.map(function(s) { return s.temperature; }));
-                    block.className = 'frost-block ' + getFrostLevel(minT);
-                } else {
-                    block.className = 'frost-block frost-none';
-                }
-                cell.appendChild(block);
-            });
-            frostRow.appendChild(cell);
-        });
-        forecast.appendChild(frostRow);
+        // -- Föhndiagramm --
+        renderFoehn(forecast, days);
 
         // -- Schneefallgrenze --
         forecast.appendChild(txt('div', 'section-title', 'Schneefallgrenze'));
         var snowRow = el('div', 'snow-row');
+        setCols(snowRow, nDays);
         days.forEach(function(d) {
             var cell = el('div');
             cell.textContent = d.snowLevel + ' m';
@@ -643,19 +928,10 @@
         });
         forecast.appendChild(snowRow);
 
-        // -- Wind --
-        forecast.appendChild(txt('div', 'section-title', 'Wind (B\u00F6en)'));
-        var windRow = el('div', 'wind-row');
-        days.forEach(function(d) {
-            var cell = el('div');
-            cell.textContent = d.windGust + ' km/h';
-            windRow.appendChild(cell);
-        });
-        forecast.appendChild(windRow);
-
         // -- Neuschnee --
         forecast.appendChild(txt('div', 'section-title', 'Neuschnee'));
         var newSnowRow = el('div', 'snow-row');
+        setCols(newSnowRow, nDays);
         days.forEach(function(d) {
             var cell = el('div');
             cell.textContent = d.freshSnow > 0 ? d.freshSnow + ' cm' : '-';
@@ -681,54 +957,12 @@
         a.textContent = 'Originalseite auf wetter.provinz.bz.it';
         var b = el('p');
         b.textContent = 'Privatprojekt, nur für den Eigengebrauch bestimmt (simuliert altes layout)';
-        b.style.fontSize = "8px"
+        b.style.fontSize = '8px';
         link.appendChild(a);
         footer.appendChild(link);
         footer.appendChild(b);
 
         content.appendChild(footer);
-
-        // Legend
-        var legend = el('div');
-        legend.style.padding = '12px 20px';
-        legend.style.fontSize = '0.75rem';
-        legend.style.color = '#888';
-
-        var legendTitle = el('div');
-        legendTitle.style.fontWeight = '700';
-        legendTitle.style.marginBottom = '4px';
-        legendTitle.textContent = 'Legende Frostgefahr:';
-        legend.appendChild(legendTitle);
-
-        var legendItems = el('div');
-        legendItems.style.display = 'flex';
-        legendItems.style.gap = '12px';
-        legendItems.style.flexWrap = 'wrap';
-
-        var frostLegend = [
-            ['frost-none', 'Kein Frost (\u22653\u00B0C)'],
-            ['frost-light', 'Leicht (0-3\u00B0C)'],
-            ['frost-moderate', 'M\u00E4\u00DFig (-3 bis 0\u00B0C)'],
-            ['frost-severe', 'Stark (-7 bis -3\u00B0C)'],
-            ['frost-extreme', 'Sehr stark (<-7\u00B0C)']
-        ];
-        frostLegend.forEach(function(item) {
-            var span = el('span');
-            span.style.display = 'flex';
-            span.style.alignItems = 'center';
-            span.style.gap = '4px';
-
-            var block = el('span', 'frost-block ' + item[0]);
-            block.style.display = 'inline-block';
-            span.appendChild(block);
-
-            var label = document.createTextNode(item[1]);
-            span.appendChild(label);
-
-            legendItems.appendChild(span);
-        });
-        legend.appendChild(legendItems);
-        content.appendChild(legend);
     }
 
     function loadMunicipality(id) {
@@ -742,12 +976,14 @@
         loading.textContent = 'Wetterdaten werden geladen...';
         content.appendChild(loading);
 
-        fetch(BASE_URL + id + '.json?cb=' + Date.now())
+        var forecastPromise = fetch(BASE_URL + id + '.json?cb=' + Date.now())
             .then(function(r) {
                 if (!r.ok) throw new Error('HTTP ' + r.status);
                 return r.json();
-            })
-            .then(render)
+            });
+
+        Promise.all([forecastPromise, skyPromise, pressurePromise])
+            .then(function(results) { render(results[0]); })
             .catch(function(err) {
                 content.textContent = '';
                 var errDiv = el('div', 'loading');
@@ -757,7 +993,6 @@
             });
     }
 
-    // Init dropdown
     var select = document.getElementById('municipality-select');
     MUNICIPALITIES.forEach(function(m) {
         var opt = document.createElement('option');
@@ -770,7 +1005,6 @@
         loadMunicipality(this.value);
     });
 
-    // Load default
     loadMunicipality(DEFAULT_ID);
     </script>
 </body>
